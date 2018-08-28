@@ -81,7 +81,7 @@
 
 <script>
     
-    if (!("a" in window)){
+    if (!("a" in window)){ //也可以尝试：if (!!("a" in window)){ 这个语句，输出的是 3
                 var a =3; //定义了一个变量，a=undefined,JS没有块级作用域
             }
             console.log(a);
