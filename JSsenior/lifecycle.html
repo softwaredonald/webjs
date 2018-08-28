@@ -1,87 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>执行上下文的生命周期</title>
     <style>
-        .s1{
+        .s1 {
             font-size: 1.2em;
-            color:orange;
+            color: darkgoldenrod;
             text-indent: 4em;
         }
-        .s2{
+
+        .s2 {
             font-size: 1.4em;
-            color:red;
-            text-indent:2em;
+            color: red;
+            text-indent: 2em;
 
         }
-        .s3{
-            font-size:1.5em;
-            color:green;
+
+        .s3 {
+            font-size: 1.5em;
+            color: green;
             text-indent: 1em;
         }
-        .s4{
-            font-size:1.6em;
-            color:yellow;
+
+        .s4 {
+            font-size: 1.6em;
+            color: yellow;
         }
-    
     </style>
 </head>
+
 <body>
     <h1>
         总的声明周期：创建-->执行-->出栈等待销毁，除非出现闭包；
     </h1>
     <p>
-      <span class = "s3">1. 创建作用域链 scope chain </span> <br>
-      <span class = "s3">2. 创建变量对象（AO）：首先初始化函数的参数arguments，初始化参数声明，初始化变量（undefined）。函数的优先级要高于变量，如果变量和函数重名，变量会被忽略</span>  <br>
-      <span class="s2">1. 创建arguments对象，检查上下文，初始化参数名称和值并创建引用的复制</span> <br>
-      <span class="s2">2. 扫描上下文的函数声明，而非函数表达式：
-      </span> <br>
-      <span class = "s1">a. 为发现的每一个函数，在变量对象上创建一个属性————函数的名字————其有一个指向函数在内存中的引用</span> <br>
-      <span class = "s1">b. 如果函数的名字已经存在，引用指针将被重写</span> <br>
-      <span class = "s2">3.扫描上下文的变量声明：
-        <br>
-      </span>
-      <span class = "s1">a.为发现的每个变量声明，在变量对象上创建一个属性————就是变量的名字，并且将变量的值初始化为undefined <br>
-        如果变量的名字已经在变量对象里存在，将不会进行任何操作并继续扫描。
-      </span> <br>
-      <span class = "s2">求出上下文内部"this"的值</span>
-      <span class = "s3">执行阶段：执行变量赋值、代码执行</span>
-      <span class = "s3">回收阶段：执行上下文出栈，等待虚拟机回收执行上下文</span>
-      <h1>
-          执行上下文的相关概念
-      </h1>
-      <span class="s3">1.栈的数据结构：先进后出<br>2.EC:函数执行环境（或叫执行上下文），execution context <br>3.ECS:执行环境栈， execution context stack <br>4. <strong>VO变量对象（variable object）函数外部的</strong>:JS的执行上下文中都有个对象用来存放执行上下文中可能被访问但是不能被delete的 <strong>函数标识符、形参、变量声明</strong>。他们会被挂载在这个对象上，对象的属性对应他们的名字，对象属性的值对应他们的值，但这个对象是规范上或者说是引擎实现上的不可再JS环境中访问到对象活动。<br>5. <strong>AO激活对象（Activation object）函数内部的</strong>有了变量对象存每个上下文中的东西，但是他们访问的时间？就是每进入一个执行上下文时，这个执行上下文中的变量对象就被激活，也就是该上下文中的函数标识符、形参、变量声明等就可以被访问到了 <br> 6. scope chain：作用域链</span> 
-
-
+        <span class="s3">1. 创建作用域链 scope chain </span> <br>
+        <span class="s3">2. 创建变量对象（AO）：首先初始化函数的参数arguments，初始化参数声明，初始化变量（undefined）。函数的优先级要高于变量，如果变量和函数重名，变量会被忽略</span> <br>
+        <span class="s2">1. 创建arguments对象，检查上下文，初始化参数名称和值并创建引用的复制</span> <br>
+        <span class="s2">2. 扫描上下文的函数声明，而非函数表达式：
+        </span> <br>
+        <span class="s1">a. 为发现的每一个函数，在变量对象上创建一个属性————函数的名字————其有一个指向函数在内存中的引用</span> <br>
+        <span class="s1">b. 如果函数的名字已经存在，引用指针将被重写</span> <br>
+        <span class="s2">3.扫描上下文的变量声明：
+            <br>
+        </span>
+        <span class="s1">a.为发现的每个变量声明，在变量对象上创建一个属性————就是变量的名字，并且将变量的值初始化为undefined <br> 如果变量的名字已经在变量对象里存在，将不会进行任何操作并继续扫描。
+        </span> <br>
+        <span class="s2">求出上下文内部"this"的值</span>
+        <span class="s3">执行阶段：执行变量赋值、代码执行</span>
+        <span class="s3">回收阶段：执行上下文出栈，等待虚拟机回收执行上下文</span>
+        <h1>
+            执行上下文的相关概念
+        </h1>
+        <span class="s3">1.栈的数据结构：先进后出<br>2.EC:函数执行环境（或叫执行上下文），execution context <br>3.ECS:执行环境栈， execution context stack
+            <br>4. <strong>VO变量对象（variable object）函数外部的</strong>:JS的执行上下文中都有个对象用来存放执行上下文中可能被访问但是不能被delete的 <strong>函数标识符、形参、变量声明</strong>。他们会被挂载在这个对象上，对象的属性对应他们的名字，对象属性的值对应他们的值，但这个对象是规范上或者说是引擎实现上的不可再JS环境中访问到对象活动。<br>5.
+            <strong>AO激活对象（Activation object）函数内部的</strong>有了变量对象存每个上下文中的东西，但是他们访问的时间？就是每进入一个执行上下文时，这个执行上下文中的变量对象就被激活，也就是该上下文中的函数标识符、形参、变量声明等就可以被访问到了
+            <br> 6. scope chain：作用域链</span>
+        <br><br><br> 练习：
     </p>
+    <pre>
+                        //变量声明
+                        var a1= 19, a2=20,a3='sss',b1={name:'don'};
+                        //函数调用
+                        a1=f1(a1,a2)
+                        //函数声明
+                        function f1(a,b){
+                            var t =0,
+                                m=10;
+                            for (var i = 0; i < a; i++){
+                                console.log(i);
+                        
+                            }
+                
+                            function f2(){
+                                console.log(f2);
+                            }
+                            return a+b;
+                
+                
+                        }
+    </pre>
 
+    <h1>
+        变量的作用域
+    </h1>
+    <span class="s1">1. 变量声明的区域，变量和函数的可访问范围。在全局声明的变量为全可见可访问的，是全局变量；如果在函数内部声明的变量只能在函数内部访问。<br>2. 函数的参数只能在行数内部访问，是局部变量
+        <br>3.
+    </span>
+    <span class="s2"> <strong>JavaScript没有块级作用域</strong> <br></span><span class="s1">
+        只有函数作用域和全局作用域。for循环内部定义的变量是函数级别的作用域。<br>4. 变量没有在函数内声明或者声明的时候没有带var就是全局变量，拥有全局作用域。<strong>特殊：var a=b=c=0; b与c是全局变量</strong>
+        <br> 5. 全局作用域的变量可以在js中任何地方调用，函数作用域的变量只能在自己函数内部调用，包括自己内部定义的其他函数都可以直接调用。<br>6. 变量的作用域是以他声明时的为准，因为变量的作用域在js代码的解释阶段就已经完成规则的制定。</span>
 
+    <h1>
+        在for循环中内部定义的变量，只能在for内部访问就是块作用域
+    </h1>
 
+    <p>
+        <pre>
+            function f1(){
+                var t1=9;
+
+                for(var i=0; i < 10;i++){
+                    console.log(i); //
+                }
+                console.log(i); //因为没有块级作用域，在for外面还能访问到
+
+            }
+            f1();
+            console.log(i); //全局是访问不到f1函数内部的变量的
+        </pre>
+    </p>
+    <br>
+    <br>
+    <br>
+    <h1>
+        函数变量提升 hositing
+    </h1>
     <script>
-        //变量声明
-        var a1= 19, a2=20,a3='sss',b1={name:'don'};
-        //函数调用
-        a1=f1(a1,a2)
-        //函数声明
-        function f1(a,b){
-            var t =0,
-                m=10;
-            for (var i = 0; i<a; i++){
-                console.log(i);
-        
-            }
+        var a = 10; //全局变量，全局都可以访问
 
-            function f2(){
-                console.log(f2);
-            }
-            return a+b;
+        //先执行f1函数，然后再定义f1函数的内容。等价于在下面整行
+        // f1();
+        function f1() {
+            // 函数变量提升：因为在函数执行之前，先创建了函数EC，在创建EC的时候已经把函数里面声明的变量都已经初始化成了undefined
+            //所以：hositing 存在：很多人：把函数内部所有的变量声明都放在函数的头部。
+            console.log(a); // a=> undefined
+            var a = 19;     //给局部变量a赋值19
+            console.log(a); //a=>19
 
+            //特殊情况：变量声明和函数声明 同时拥有一个名字的时候，函数优先级高。
+            console.log(b);
+            var b = 9;
+            function b() {
+
+            }
+            console.log(b);
 
         }
-    
+        f1();
+        console.log(a); //a=>10
+
     </script>
 </body>
+
 </html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>练习题目</title>
+    <style>
+    .s1{font-size: 1.1em; color: darkblue;}
+    .s2{font-size: 1.3em; color: darkorange;}
+    .s3{font-size: 1.5em; color: red;}
+    
+    
+    
+    </style>
+</head>
+<body>
+
+    <h1>关于window</h1>
+    <p class = "s2">
+        在浏览器中全局对象就是window <br>
+        在全局作用域中声明的变量和函数声明都会作为window的属性存在
+        <pre class = "s1">
+                var a=9;
+                function b(){
+                    console.log(a);
+                }
+                console.log('a' in window);
+                console.log(window.a);
+                console.log(window['a']);
+                console.log(window.b());
+        </pre>
+
+    </p>
+<p class= "s3">下面是练习</p>
+    <pre class = "s1">
+        -------------------------------
+            var a= 18
+            function d(){
+                console.log(a);
+                var a = {age:19};
+                console.log(a);
+            
+            }
+            d();
+            console.log(a);
+        -------------------------------
+            if (!("a" in window)){
+                var a =3; //定义了一个变量，a=undefined,JS没有块级作用域
+            }
+            console.log(a);
+        -------------------------------
+            console.log(a);  //a=> function a(){} 函数拥有更高的优先级
+            var a = 20;
+            console.log(a);
+            function a(){
+            }
+        -------------------------------
+        
+            f();
+            console.log(a); //a=>报错的undefined
+            console.log(b); //b=9
+            console.log(c); //c=9
+            function f(){
+                var a=b=c=9;
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            }
+        
+        -------------------------------
+            f();
+            function f(){
+                for (var k=0;k < 10;k++){
+                    console.log(k);   //0-9
+                }   
+                console.log(k);         //10
+            }
+        
+    </pre>
+
+<script>
+    
+    if (!("a" in window)){
+                var a =3; //定义了一个变量，a=undefined,JS没有块级作用域
+            }
+            console.log(a);
+</script>
+
+</body>
+</html>
