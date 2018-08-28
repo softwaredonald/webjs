@@ -30,6 +30,10 @@
             font-size: 1.6em;
             color: yellow;
         }
+        pre{
+            font-size: 1.3em;
+            color:darkblue;
+        }
     </style>
 </head>
 
@@ -84,7 +88,10 @@
                 
                         }
     </pre>
-
+    <br>
+    <br>
+    <br>
+    <hr>
     <h1>
         变量的作用域
     </h1>
@@ -94,7 +101,10 @@
     <span class="s2"> <strong>JavaScript没有块级作用域</strong> <br></span><span class="s1">
         只有函数作用域和全局作用域。for循环内部定义的变量是函数级别的作用域。<br>4. 变量没有在函数内声明或者声明的时候没有带var就是全局变量，拥有全局作用域。<strong>特殊：var a=b=c=0; b与c是全局变量</strong>
         <br> 5. 全局作用域的变量可以在js中任何地方调用，函数作用域的变量只能在自己函数内部调用，包括自己内部定义的其他函数都可以直接调用。<br>6. 变量的作用域是以他声明时的为准，因为变量的作用域在js代码的解释阶段就已经完成规则的制定。</span>
-
+        <br>
+        <br>
+        <br>
+        <hr>
     <h1>
         在for循环中内部定义的变量，只能在for内部访问就是块作用域
     </h1>
@@ -117,33 +127,67 @@
     <br>
     <br>
     <br>
+    <hr>
     <h1>
         函数变量提升 hositing
     </h1>
-    <script>
-        var a = 10; //全局变量，全局都可以访问
 
-        //先执行f1函数，然后再定义f1函数的内容。等价于在下面整行
-        // f1();
-        function f1() {
-            // 函数变量提升：因为在函数执行之前，先创建了函数EC，在创建EC的时候已经把函数里面声明的变量都已经初始化成了undefined
-            //所以：hositing 存在：很多人：把函数内部所有的变量声明都放在函数的头部。
-            console.log(a); // a=> undefined
-            var a = 19;     //给局部变量a赋值19
-            console.log(a); //a=>19
+    <pre>
+                    var a = 10; //全局变量，全局都可以访问
 
-            //特殊情况：变量声明和函数声明 同时拥有一个名字的时候，函数优先级高。
-            console.log(b);
-            var b = 9;
-            function b() {
-
+                    //先执行f1函数，然后再定义f1函数的内容。等价于在下面整行
+                    // f1();
+                    function f1() {
+                        // 函数变量提升：因为在函数执行之前，先创建了函数EC，在创建EC的时候已经把函数里面声明的变量都已经初始化成了undefined
+                        //所以：hositing 存在：很多人：把函数内部所有的变量声明都放在函数的头部。
+                        console.log(a); // a=> undefined
+                        var a = 19;     //给局部变量a赋值19
+                        console.log(a); //a=>19
+            
+                        //特殊情况：变量声明和函数声明 同时拥有一个名字的时候，函数优先级高。
+                        console.log(b);
+                        var b = 9;
+                        function b() {
+            
+                        }
+                        console.log(b);
+            
+                    }
+                    f1();
+                    console.log(a); //a=>10
+    
+    </pre>
+    <br>
+    <br>
+    <br>
+    <hr>
+    <h1>
+        作用域链 scope chain
+    </h1>
+    <p>
+        1. 作用域链是一个数组
+        2. 作用域链是控制变量作用域的有序访问的JS内部实现。
+        3. 作用连存储在函数的执行上下文中，作用域链中存放的是执行环境中的VO或者AO。
+        4. 当前函数的作用域对象都是在最前端，而且全局的最末端
+        5. 变量（标识符）的搜索都是从作用域链的最前端向后搜索，直到全局作用域，标识符的解析是沿着作用域链一级一级搜索的过程，从第一个对象开始，逐级向后回溯，直到找到同名标识符为止，找到后不再继续遍历，找不到就报错。
+    </p>
+    <pre>
+            //作用域链
+            var t = 0, m =10;               //定义全局变量
+            var res = fParent(t,m);         //定义全局变量
+            console.log(res);
+            function fParent(a,b){          //全局的函数声明
+                var vParent = 'parent';
+                function fChild(c){
+                    var vChild = 'child';
+                    return c+vChild;
+                
+                }
+                return a+b+vParent+fChild(a); //a=t=0
             }
-            console.log(b);
-
-        }
-        f1();
-        console.log(a); //a=>10
-
+    </pre>
+    <script>
+        
     </script>
 </body>
 
