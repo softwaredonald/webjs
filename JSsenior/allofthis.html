@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,50 @@
     <title>函数的调用模式与this</title>
 
     <style>
-    .s1{font-size:1.2em; color:darkblue;}
-    .s2{font-size:1.5em; color:orange;}
-    .s3{font-size:1.7em; color:red;}
-    .s4{font-size: 1.3em; color:blueviolet}
-    .s5{font-size:1.4em; color:rgb(250, 46, 46)}
-    
+        .s1 {
+            font-size: 1.2em;
+            color: darkblue;
+        }
+
+        .s2 {
+            font-size: 1.5em;
+            color: orange;
+        }
+
+        .s3 {
+            font-size: 1.7em;
+            color: red;
+        }
+
+        .s4 {
+            font-size: 1.3em;
+            color: blueviolet
+        }
+
+        .s5 {
+            font-size: 1.4em;
+            color: rgb(250, 46, 46)
+        }
     </style>
 
-    
+
 </head>
+
 <body>
     <h1>四种调用模式的定义</h1>
     <p>
-        <ol  class="s1">
+        <ol class="s1">
             <li>
                 方法调用模式
                 <ul>
                     <li>如果一个函数作为对象的一个方法属性调用，那么它的调用模式就是方法调用模式。</li>
-                    <li><pre> var a = {}; a.toString();//方法调用模式 </pre></li>
+                    <li>
+                        <pre> var a = {}; a.toString();//方法调用模式 </pre>
+                    </li>
                     <li>方法调用模式的this指向调用对象。</li>
                 </ul>
                 <hr>
-                <pre class = "s4">
+                <pre class="s4">
                         //定义构造函数
                         //定义个dog类的构造函数
                         function Dog(dogName){
@@ -54,7 +76,7 @@
 
                         ****** this 在这个实例中相当于d 这个变量。
                 </pre>
-                <pre class = "s5">
+                <pre class="s5">
                 lsls is running
                 </pre>
             </li>
@@ -64,10 +86,12 @@
                     <li>如果一个函数被直接调用。那么调用者歧视就是全局对象：window</li>
                     <li>函数调用模式this指向全局对象。</li>
                     <li>不管在什么地方定义的，直接调用函数都属于这种。如果是严格模式this == undefined </li>
-                    <li><pre>function f() {}; f(); //函数调用模式</pre></li>
+                    <li>
+                        <pre>function f() {}; f(); //函数调用模式</pre>
+                    </li>
                 </ul>
 
-                <pre class = "s4">
+                <pre class="s4">
                         //函数调用：
                         function f(a,b){
                             console.log(a+" "+b); 
@@ -77,17 +101,20 @@
                         }
                         f(2,3); // 直接调用函数： f()：函数调用模式；
                 </pre>
+                <hr>
             </li>
             <li>构造器调用模式
                 <ul>
                     <li>构造器调用模式就是构造函数调用</li>
                     <li>构造器模式调用必须有关键字new的存在</li>
                     <li>构造器模式调用的this指向创建出来的新对象。</li>
-                    <li><pre> var t = new Dog();//构造器调用模式</pre></li>
+                    <li>
+                        <pre> var t = new Dog();//构造器调用模式</pre>
+                    </li>
                     <li>构造函数可以返回一个值，但是如果是简单类型会被忽略，如果是引用类型会替换掉新创建的对象返回</li>
                 </ul>
 
-                <pre class = "s4">
+                <pre class="s4">
                         //构造器调用模式===构造函数
                         // 关键字：new
                         function Cat(){
@@ -117,6 +144,7 @@
                         }
                 </pre>
             </li>
+            <hr>
             <li>apply/call调用模式（借用方法模式）
                 <ul>
                     <li>apply 和call可以改变函数调用的内部this的指向。</li>
@@ -124,8 +152,100 @@
                     <li>第一个参数如果是null，undefined会被全局对象替代，如果是简单类型会被包装类型替代。</li>
                     <li>call第二个参数开始后面的都是传给函数的参数，可以有多个，用逗号隔开</li>
                     <li>apply第二个参数是一个传给函数的参数数组</li>
-                    <li>调用：<pre>function m(a){}; m.call(window,2); m.apply(window,[2]);</pre></li>
+                    <li>调用：
+                        <pre>function m(a){}; m.call(window,2); m.apply(window,[2]);</pre>
+                    </li>
                 </ul>
+            </li>
+            <pre class="s4">
+                    // call and apply module
+                    function sum (a,b){
+                        console.log(this);
+                        return a+b;
+                    }
+                    sum (1,2); // this ==> window
+              
+              
+                      var t = {
+                          name: 'don'
+                      }
+                     // f.call(fContext, p1, p2, ....)
+                      var m = sum.call(t, 2,3,4,5);
+                      console.log(m); //call传进去都是参数散列
+              
+                      var n = sum.apply(t,[1,2]);
+                      console.log(n); // apply传进去的参数，是以数组的形式
+              
+                      // 如果你传递参数是简单类型（值类型，原始类型），那么都会出现一些变化
+                      // 如果传第一参数不是引用类型而是：null、undefined ==> window
+                      // 如果是number、string、boolean 转成对应的包装类型
+                      sum.call(null,3,5)
+                      sum.call(undefined,3,5)
+             </pre>
+            <li> 综合练习
+                <ol>
+                    <li>
+                        <pre class="s4"> 
+                            //练习：
+                            function Dog(){
+                                this.age = 19;
+                                console.log(this);
+                            }
+                            Dog(); // 函数执行模式 ==> window
+                            var d = new Dog(); //构造函数执行模式 ==> d 对象
+                     </pre>
+                    </li>
+                    <li>
+                        定义按钮类，要求按钮类的构造函数可以接受参数初始化按钮的宽度、高度、坐标xy
+                        <pre class="s5">
+                            
+                                function button(width, height, x,y){
+                                    this.width_n=width;
+                                    this.height_n=height;
+                                    this.x_n=x;
+                                    this.y_n = y;
+                                }
+                                var b = new button(200,200,3,4);
+
+
+                         </pre>
+                    </li>
+                    <li>借用math 的min 方法实现求数组[2,9,33]中的最小值
+                        <pre class = "s5">
+                                // var min = Maht.min(1,2,4);
+                                Math.min.apply(null,[1,2,4]);
+                        </pre>
+                    </li>
+                    <li>把类数组转换成真正的数组：var t = {}; t[0]=1; t[1]=true; t.length = 2;
+                        <pre class = "s5">
+                                var t = {};  //类数组，跟数组很类似，但不是数组。
+                                t[0]=1; 
+                                t[1]=true; 
+                                t.length = 2;
+                                // t = [1,true,"don"]
+                                //var m =  [1,2,3];
+                                //m.slice(); // 如果什么都不传，默认是从0索引开始截取到数组最后。
+                                // 第一个参数是：截取开始的位置, startIndex
+                                // 第二个参数是：截取结束的位置+1, endIndex
+                                // 如果借用slice 方法，使用this指向到t对象，那么slice方法会返回t对象对应的数组
+                                var k = Array.prototype.slice.call(t,0);
+                                //通过一个slice方法可以把类数组换成真正的数组。
+                                console.log(k);
+
+                        </pre>
+                    </li>
+                    <li>判断代码输出的内容
+                        <pre class = "s4">
+                            
+                            function Dog(){
+                                console.log(this);
+                            } 
+                            Dog(); //函数调用模式
+                            var d = new Dog(); //构造调用函数， this == d;
+                            Dog.call(null);     // 借用调用模式 window
+                        </pre>
+                    </li>
+                </ol>
             </li>
         </ol>
 
@@ -133,16 +253,8 @@
 
 
     <script>
-        
-        //练习：
-        function Dog(){
-            this.age = 19;
-            console.log(this);
-        }
-        Dog(); // 函数执行模式 ==> window
-        var d = new Dog(); //构造函数执行模式 ==> d 对象
 
-       
     </script>
 </body>
+
 </html>
