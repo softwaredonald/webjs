@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数的重载</title>
+</head>
+<body>
+    <h1>arguments可以实现函数的重载功能</h1>
+    <p>
+        <ol>
+            <li>
+                JavaScript 中函数不能重名，如果重名后面的会把前面的覆盖
+            </li>
+            <li>原因：所有函数的声明都会创建在VO或者AO上的一个属性，而后面声明的函数会把前面VO或者AO中的名字属性覆盖。</li>
+            <li>重载的概念：Java，C#中都会有函数的重载， 在程序中可以定义相同名字，不同参数的形式的不同函数。函数在调用的时候，自动识别不同参数对应的函数，实现相同函数名不同的函数调用</li>
+            <li>
+                JavaScript中通过arguments实现函数重载。
+            </li>
+            <li>数组slice方法、splice方法等都可以传递一个或者多个参数，不同参数方法内部实现不一样，就是方法重载</li>
+            <li>练习题： 创建一个矩形的类型，构造函数接受一个参数，返回一个正方形，接受两个参数返回的一个矩形</li>
+        </ol>
+
+        <pre>
+                function react(){
+                    //一个返回正方形
+                  
+                    if (arguments.length ==1){
+                        this.x = arguments[0];
+                        this.y = arguments[0];
+                    }
+        
+                    //两个就返回长方形
+                    if (arguments.length > 1){
+                        this.x = arguments[0];
+                        this.y = arguments[1];
+        
+                    }
+        
+                    // toString方法进行重写：
+                    //由于跟原型上的toString方法重名，那么就会覆盖object原型上的toString方法
+                    this.toString = function(){
+                        console.log('width:' + this.x + 'height' + this.y)
+                        return 'width:   ' + this.x + '   height   ' + this.y
+                    }
+        
+                }
+        
+                var r1 = new react(8);
+                console.log(r1.toString());
+        
+                var r2 = new react(9,10);
+                console.log(r2.toString());
+        </pre>
+    </p>
+
+    <script>
+        function react(){
+            //一个返回正方形
+          
+            if (arguments.length ==1){
+                this.x = arguments[0];
+                this.y = arguments[0];
+            }
+
+            //两个就返回长方形
+            if (arguments.length > 1){
+                this.x = arguments[0];
+                this.y = arguments[1];
+
+            }
+
+            // toString方法进行重写：
+            //由于跟原型上的toString方法重名，那么就会覆盖object原型上的toString方法
+            this.toString = function(){
+                console.log('width:' + this.x + 'height' + this.y)
+                return 'width:   ' + this.x + '   height   ' + this.y
+            }
+
+        }
+
+        var r1 = new react(8);
+        console.log(r1.toString());
+
+        var r2 = new react(9,10);
+        console.log(r2.toString());
+    
+    
+    
+    
+    </script>
+
+</body>
+</html>

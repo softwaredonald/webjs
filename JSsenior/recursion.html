@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数的递归调用和斐波那契数列</title>
+    <style>
+    .s1 {
+        font-size: 1.4em;
+        color:blue;
+    }
+    
+    
+    </style>
+
+</head>
+
+<body>
+    <h1>递归调用</h1>
+    <p class="s1">
+        自己调用自己,但是效率极为低，不建议使用
+    </p>
+    <hr>
+    <pre>
+            console.log(s(100));
+            function s(number){
+                if (number < = 1){
+                    return number;
+                };
+    
+    
+                return s(number -1)+number;
+    
+                // return arguments.callee(num-1)+num;//严格模式下会报错，好处是如果函数被改了也能返回初始状态。
+            }
+        
+    </pre>
+
+    <hr>
+    <h1>命名函数表达式</h1>
+
+    <p>
+        <pre>
+                var f = function(){
+                    console.log('sss');
+                }
+        
+                f(); //调用函数表达式执行；
+
+
+
+
+                //函数命名表达式。fun相当于在函数内部添加一个变量fun，fun指向函数自身
+                // fun=== arguments.callee
+                // fun的作用域在函数内部，不会影响函数外面的声明的参数或者函数。
+                var m = function fun(){
+                    console.log("fun");
+                    fun();
+                }
+                m();
+        </pre>
+    </p>
+    <hr>
+    <h1>
+        求num的阶乘，用递归实现
+    </h1>
+    <pre>
+            function f(num) {
+                if (num <= 1) {
+                    return 1;
+                }
+                return num*f(num-1)
+    
+            }
+    </pre>
+    <hr>
+    <h1>斐波那契数列</h1>
+    <p>
+        f(n)=f(n-1)+f(n-2)
+    </p>
+    <pre>
+            function f(n){
+                if(n==1){return 1;};
+                if(n==0){return 0;};
+                return f(n-1)+f(n-2);
+            }
+    </pre>
+    <br>
+
+    <script>
+        
+
+
+    </script>
+</body>
+
+</html>
